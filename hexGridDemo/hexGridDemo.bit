@@ -1,0 +1,33 @@
+package:application/vnd.bitty-archive;
+data:text/json;count=119;path=info.json;
+{
+  "id": 0,
+  "title": "Noname",
+  "description": "",
+  "author": "",
+  "version": "1.0",
+  "genre": "",
+  "url": ""
+}
+data:text/lua;count=579;path=main.lua;
+local elapsedTime = 0
+
+local function drawRect(elapsedTime)
+	local canvasWidth, canvasHeight = Canvas.main:size()
+	local value = (elapsedTime % 3) * 255 / 3 
+	local backgroundColor = Color.new(12, value, 12)
+
+	rect(0, 0, canvasWidth, canvasHeight, true, backgroundColor)
+end
+
+function setup()
+	Canvas.main:resize(640, 480)
+	elapsedTime = 0
+end
+
+-- Updating entry, executes once per cycle (often 60 times per second).
+-- The delta parameter means how long has been elapsed since previous update.
+function update(delta)
+	elapsedTime = elapsedTime + delta
+	drawRect(elapsedTime)
+end
