@@ -9,10 +9,8 @@ data:text/json;count=119;path=info.json;
   "genre": "",
   "url": ""
 }
-data:text/lua;count=807;path=main.lua;
+data:text/lua;count=989;path=main.lua;
 local tileWidth = 40
-local xVector = Vec2.new(1, 0)
-local yVector = Vec2.new(0, 1)
 
 local function drawRect(elapsedTime)
 	local canvasWidth, canvasHeight = Canvas.main:size()
@@ -22,11 +20,23 @@ local function drawRect(elapsedTime)
 	rect(0, 0, canvasWidth, canvasHeight, true, backgroundColor)
 end
 
-local function drawSquareTile(tileCoordX, tileCoordY)
-	local backgroundColor = Color.new(12, 192, 12)
-	local x0 = tileWidth * ((xVector.x * tileCoordX) + (xVector.y * tileCoordY))
-	local y0 = tileWidth * ((yVector.x * tileCoordX) + (yVector.y * tileCoordY))
-	rect(x0, y0, x0+tileWidth, y0+tileWidth, true, backgroundColor)
+local function drawSquareTile(tileCoordQ, tileCoordR, colorIndex)
+	local colorsByIndex = {
+		Color.new(153, 148, 67),
+		Color.new(193, 108, 32),
+		Color.new(38, 34, 34)
+	}
+
+	local backgroundColor = colorsByIndex[colorIndex]
+	local defaultColor = Color.new(221, 76, 232)
+	if backgroundColor == nil then
+		backgroundColor = defaultColor
+	end
+
+	local x0 = tileWidth * tileCoordQ + (tileCoordR * (tileWidth / 2))	
+	local y0 = tileWidth * tileCoordR
+	
+	rect(x0, y0, x0+tileWidth-2, y0+tileWidth-2, true, backgroundColor)
 end
 
 function setup()
@@ -34,7 +44,9 @@ function setup()
 end
 
 function update(delta)
-	drawSquareTile(0,0)
-	drawSquareTile(1,1)
-	drawSquareTile(10,8)
+	drawSquareTile(0,0,1)
+	drawSquareTile(1,0,2)
+	drawSquareTile(0,1,2)
+	drawSquareTile(1,1,1)
+	drawSquareTile(0,2,3)
 end
