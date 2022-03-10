@@ -9,7 +9,8 @@ data:text/json;count=119;path=info.json;
   "genre": "",
   "url": ""
 }
-data:text/lua;count=579;path=main.lua;
+data:text/lua;count=600;path=main.lua;
+local tileWidth = 40
 local elapsedTime = 0
 
 local function drawRect(elapsedTime)
