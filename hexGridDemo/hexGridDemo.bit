@@ -9,8 +9,10 @@ data:text/json;count=119;path=info.json;
   "genre": "",
   "url": ""
 }
-data:text/lua;count=579;path=main.lua;
-local elapsedTime = 0
+data:text/lua;count=807;path=main.lua;
+local tileWidth = 40
+local xVector = Vec2.new(1, 0)
+local yVector = Vec2.new(0, 1)
 
 local function drawRect(elapsedTime)
 	local canvasWidth, canvasHeight = Canvas.main:size()
@@ -20,14 +22,19 @@ local function drawRect(elapsedTime)
 	rect(0, 0, canvasWidth, canvasHeight, true, backgroundColor)
 end
 
-function setup()
-	Canvas.main:resize(640, 480)
-	elapsedTime = 0
+local function drawSquareTile(tileCoordX, tileCoordY)
+	local backgroundColor = Color.new(12, 192, 12)
+	local x0 = tileWidth * ((xVector.x * tileCoordX) + (xVector.y * tileCoordY))
+	local y0 = tileWidth * ((yVector.x * tileCoordX) + (yVector.y * tileCoordY))
+	rect(x0, y0, x0+tileWidth, y0+tileWidth, true, backgroundColor)
 end
 
--- Updating entry, executes once per cycle (often 60 times per second).
--- The delta parameter means how long has been elapsed since previous update.
+function setup()
+	Canvas.main:resize(640, 480)
+end
+
 function update(delta)
-	elapsedTime = elapsedTime + delta
-	drawRect(elapsedTime)
+	drawSquareTile(0,0)
+	drawSquareTile(1,1)
+	drawSquareTile(10,8)
 end
